@@ -1,69 +1,74 @@
-Predictive Maintenance using Machine Learning (AI4I 2020 Dataset)
-
+🚀 Predictive Maintenance using Machine Learning (AI4I 2020 Dataset)
 Advanced Supervised ML Project | Real-World Manufacturing Failure Prediction
-..............................................................................................
-Project Overview
+📌 Project Overview
 
-Unexpected machine failures cause major financial losses across manufacturing industries. This project builds an end-to-end Predictive Maintenance Machine Learning system to predict machine failure in advance using real industrial sensor telemetry data.
+Unexpected machine breakdowns can cause massive production losses in manufacturing industries.
+This project builds an end-to-end Predictive Maintenance System that predicts machine failure before it happens using real industrial sensor telemetry.
 
-The system helps organizations:
+The system helps industries:
 
 Reduce unplanned downtime
+
+Prevent sudden breakdowns
 
 Optimize maintenance schedules
 
 Minimize repair costs
 
-Improve machine reliability
+Improve reliability & productivity
 
-This solution uses supervised learning, advanced feature engineering, class imbalance handling, model explainability (SHAP), and real-time deployment using Streamlit.
+This project uses:
 
-It simulates a real manufacturing setup where machines experience failures due to:
+Supervised ML
+
+Advanced feature engineering
+
+Imbalanced data handling
+
+Explainability with SHAP
+
+Deployment using Streamlit
+
+It simulates a real industrial setup with failures caused by:
 
 Mechanical load
 
-Torque fluctuations
+Torque spikes
 
 Tool wear
 
 Overheating
 
-High rotational speeds
-..............................................................................................
-The objective is to build an end-to-end pipeline that includes:
+High rotational speed
 
-✔️ Exploratory Data Analysis (EDA)
-✔️ Feature Engineering (Domain-driven)
-✔️ Handling class imbalance
-✔️ ML model training & optimization
-✔️ Evaluation using real-world metrics
-✔️ Deployment-ready pipeline
-
-This project is designed to reflect real-world predictive maintenance use cases commonly used in manufacturing analytics
-....................................................................................................
 🎯 Business Problem Statement
 
-Manufacturing machines operate under varying loads, temperatures, and wear conditions. Sudden failures lead to production loss and high maintenance costs.
-The goal is to predict whether a machine will fail before it actually breaks down, allowing preventive maintenance instead of reactive repairs.
-...................................................................................................
-Dataset Information
+Manufacturing machines operate under varying loads, temperatures, and wear conditions. Unexpected failures lead to:
 
-Dataset Name: AI4I 2020 Predictive Maintenance Dataset
-Source: UCI Machine Learning Repository / Kaggle
+Production downtime
 
-Key Features Used:
+High maintenance cost
 
-Air Temperature (K)
+Delay in delivery
 
-Process Temperature (K)
+Increased safety risks
 
-Rotational Speed (rpm)
+👉 Goal:
+Build a machine learning model that predicts Machine Failure (0/1) ahead of time so teams can schedule preventive maintenance instead of reacting after breakdowns.
 
-Torque (Nm)
+📊 Dataset Information
 
-Tool Wear (minutes)
+Dataset: AI4I 2020 Predictive Maintenance Dataset
+Source: UCI ML Repository / Kaggle
 
-Target Variable:
+🔧 Key Input Features
+Feature Description
+Air Temperature (K) Environmental temperature
+Process Temperature (K) Machine internal temperature
+Rotational Speed (rpm) Mechanical rotation rate
+Torque (Nm) Applied mechanical load
+Tool Wear (min) Wear level of machine tool
+🎯 Target Variable
 
 Machine Failure
 
@@ -71,156 +76,88 @@ Machine Failure
 
 1 → Failure
 
-Additional Failure Labels:
+🔍 Additional Failure Types
 
-Tool Wear Failure (TWF)
+(Treated as leakage → removed)
 
-Heat Dissipation Failure (HDF)
+TWF — Tool Wear Failure
 
-Power Failure (PWF)
+HDF — Heat Dissipation Failure
 
-Overstrain Failure (OSF)
+PWF — Power Failure
 
-Random Failure (RNF)
-....................................................................................
+OSF — Overstrain Failure
+
+RNF — Random Failure
+
 ✨ Key Features of This Project
 🔍 1. Exploratory Data Analysis (EDA)
 
-Distribution of sensor data
+Includes:
 
-Outlier detection using IQR
+Distribution plots
 
-Correlation heatmaps
+Outlier detection (IQR)
 
-Failure vs sensor relationships
+Correlation heatmap
 
-Class imbalance analysis
+Failure vs sensor patterns
+
+Class imbalance visualization
 
 🛠 2. Real Domain-Based Feature Engineering
 
-Created high-signal synthetic features used in industry:
+Created high-impact features used in real manufacturing:
 
-Temp_diff → Thermal stress indicator
+Feature Meaning
+Temp_diff Thermal stress indicator
+Power Torque × Rotational Speed
+Overheat_Risk 1 if Temp_diff > 20 K
+High_Load High torque conditions
+Tool_Wear_Ratio % tool wear
+Tool_Expiry_Risk 1 if wear > 80%
+Mechanical_Stress_Index Combined stress score
 
-Power = Torque × Rotational Speed
-
-High_Load flag
-
-Tool_Wear_Ratio
-
-Tool_Expiry_Risk (>80% wear)
-
-Mechanical_Stress_Index
-
-Removal of leakage columns (TWF, HDF, PWF, OSF, RNF)
+✔ These features significantly increased model performance.
 
 ⚖️ 3. Imbalanced Data Handling
 
 Applied SMOTE oversampling
 
-Ensured no data leakage in train-test split
+Ensured no train-test leakage
 
-🤖 4. Supervised ML Modeling
-
-Models trained & compared:
+🤖 4. Supervised ML Models Trained
 
 Logistic Regression
 
-Random Forest Classifier
+Random Forest
 
-XGBoost Classifier
+XGBoost
 
 Gradient Boosting
 
-Metrics used:
+📈 Evaluation Metrics Used
 
-AUC-ROC
+ROC-AUC
 
-F1-score (important due to imbalance)
+Recall (critical in predictive maintenance)
 
-Precision, Recall
+Precision, F1-Score
 
 Confusion Matrix
 
-🚀 5. Best Model Selection
-
-Random Forest / XGBoost emerges as the best performer with high recall — essential in predictive maintenance.
-...............................................................................................
-Project Workflow
-1️⃣ Import & Clean Data
-
-Checked missing values
-
-Converted datatypes
-
-Removed leakage features
-
-2️⃣ Exploratory Data Analysis
-
-Pairplots
-
-Histograms
-
-Correlation heatmaps
-
-Boxplots comparing failure vs non-failure sensors
-
-Outlier analysis
-
-3️⃣ Feature Engineering
-
-Created multiple high-impact features:
-
-Feature Meaning
-Temp_diff Difference between process & air temperature
-Overheat_Risk 1 if Temp_diff > 20 K
-Power Torque × Rotational Speed
-High_Load Flag for high torque
-Tool_Wear_Ratio Percentage wear of tool
-Tool_Expiry_Risk 1 if Tool_Wear_Ratio > 0.8
-Mechanical_Stress_Index Combined stress score
-
-These significantly boost model performance.
-
-4️⃣ Imbalance Handling
-
-Applied SMOTE
-
-5️⃣ Model Training
-
-Compared multiple models.
-The final model achieved:
-
-ROC-AUC: ~0.96
-
-Recall: High → Fewer missed failures
-
-F1 Score: Balanced
-
-6️⃣ Deployment-Ready Pipeline
-
-Built using:
-
-sklearn.pipeline
-
-ColumnTransformer
-
-joblib for model saving
-
-🏆 Results
+🏆 5. Best Model Selection
 
 Best Model: Random Forest / XGBoost
 Why?
 
-High recall
+High Recall → fewer missed failures
 
-Low false negatives
+Robust against noise
 
-Robust to noise
+Strong feature importance interpretability
 
-Good interpretability via feature importance
-
-Top Features:
+🔝 Top Contributing Features
 
 Power
 
@@ -232,20 +169,72 @@ Torque
 
 Temp_diff
 
-📈 Visuals Included in the Notebook
+📁 Project Workflow
+1️⃣ Data Cleaning
 
-This project contains:
+Checked missing values
 
-✔️ Correlation heatmap
-✔️ Outlier plots
-✔️ ROC curve
-✔️ Confusion matrix
-✔️ Feature importance plot
-✔️ Failure probability visualization
-.....................................................................................
+Converted datatypes
+
+Removed leakage columns
+
+2️⃣ Exploratory Data Analysis
+
+Histograms
+
+Boxplots
+
+Pairplots
+
+Correlation matrix
+
+Outlier visualization
+
+3️⃣ Feature Engineering
+
+Created domain-driven synthetic features (listed above).
+
+4️⃣ Handling Imbalance
+
+Applied SMOTE on training data only
+
+5️⃣ Model Training & Optimization
+
+Compared models
+
+Tuned hyperparameters
+
+Selected best performer
+
+6️⃣ Deployment
+
+Built a live inference pipeline using:
+
+sklearn.pipeline
+
+joblib for model saving
+
+Streamlit UI for real-time failure prediction
+
+📊 Model Performance
+Metric Score
+ROC-AUC ~0.96
+Recall High (critical metric)
+F1 Score Strong
+🖼️ Visuals Included
+
+✔ Correlation Heatmap
+✔ Outlier Plots
+✔ ROC Curve
+✔ Confusion Matrix
+✔ Feature Importance
+✔ Failure Probability Plot
+
 ⚙️ Technologies & Tools Used
 
-Programming: Python
+Languages:
+
+Python
 
 Libraries:
 
@@ -263,10 +252,11 @@ shap
 
 streamlit
 
-Model Deployment: Streamlit
+Others:
 
-Version Control: Git & GitHub
-....................................................................................
+Git & GitHub for version control
+
+📂 Project Structure
 predictive_maintenance_project/
 │
 ├── data/
@@ -282,13 +272,26 @@ predictive_maintenance_project/
 ├── requirements.txt
 └── README.md
 
-..............................................................................
-Key Results & Business Impact
+💡 Business Impact
 
-Reduced unplanned downtime through early failure detection
+Reduced unplanned machine downtime
 
-Improved maintenance efficiency using predictive alerts
+Enabled predictive & proactive maintenance
 
-Enabled proactive decision-making using real-time risk scoring
+Improved operational efficiency
 
-Produced an explainable, production-ready ML system
+Reduced maintenance costs
+
+Provided explainable ML-driven insights
+
+⭐ Conclusion
+
+This project demonstrates a complete end-to-end real-world Predictive Maintenance System including:
+
+✔ Data analysis
+✔ Feature engineering
+✔ ML modeling
+✔ Deployment
+✔ Explainability
+
+It simulates exactly how predictive maintenance works in industries using IoT sensor data.
