@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Predictive Maintenance System</title>
+    <style>
+      body {
+        font-family: Arial;
+        background-color: #f4f6f8;
+      }
+      .container {
+        width: 420px;
+        margin: auto;
+        margin-top: 50px;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px #ccc;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 8px;
+        margin: 8px 0;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #1f77b4;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .result {
+        margin-top: 15px;
+        font-weight: bold;
+      }
+      .danger {
+        color: red;
+      }
+      .safe {
+        color: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>Predictive Maintenance</h2>
+
+      <form action="/predict" method="post">
+        <input
+          type="text"
+          name="product_id"
+          placeholder="Product ID"
+          required
+        />
+
+        <select name="type" required>
+          <option value="">Select Product Type</option>
+          <option value="L">Low</option>
+          <option value="M">Medium</option>
+          <option value="H">High</option>
+        </select>
+
+        <input
+          type="number"
+          step="any"
+          name="air_temp"
+          placeholder="Air Temperature (K)"
+          required
+        />
+        <input
+          type="number"
+          step="any"
+          name="process_temp"
+          placeholder="Process Temperature (K)"
+          required
+        />
+        <input
+          type="number"
+          step="any"
+          name="rpm"
+          placeholder="Rotational Speed (RPM)"
+          required
+        />
+        <input
+          type="number"
+          step="any"
+          name="torque"
+          placeholder="Torque (Nm)"
+          required
+        />
+        <input
+          type="number"
+          step="any"
+          name="tool_wear"
+          placeholder="Tool Wear (min)"
+          required
+        />
+
+        <button type="submit">Predict Failure</button>
+      </form>
+
+      {% if prediction is not none %}
+      <div class="result">
+        {% if prediction == 1 %}
+        <p class="danger">⚠️ Failure Predicted</p>
+        {% else %}
+        <p class="safe">✅ No Failure Predicted</p>
+        {% endif %}
+        <p>Failure Probability: {{ probability }}</p>
+      </div>
+      {% endif %} {% if error %}
+      <p class="danger">{{ error }}</p>
+      {% endif %}
+    </div>
+  </body>
+</html>
