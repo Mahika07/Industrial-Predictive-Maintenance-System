@@ -3,14 +3,14 @@ import sys
 import numpy as np
 import pandas as pd
 from dataclasses import dataclass
-
+import joblib
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
 from src.logger import logging
 from src.exception import CustomException
-
+from src.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
@@ -24,7 +24,7 @@ class DataTransformation:
         self.data_transformation_config = DataTransformationConfig()
 
     def _feature_engineering(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Create domain-driven features"""
+        # """Create domain-driven features"""
 
         logging.info("Starting feature engineering")
 
@@ -139,7 +139,11 @@ class DataTransformation:
 
             X_train_transformed = preprocessor.fit_transform(X_train)
             X_test_transformed = preprocessor.transform(X_test)
-
+            # If output is sparse, convert to dense
+            if hasattr(X_train_transformed, "toarray"):
+                X_train_transformed = X_train_transformed.toarray()
+            if hasattr(X_test_transformed, "toarray"):
+                X_test_transformed = X_test_transformed.toarray()
             # Save preprocessor
             os.makedirs(
                 os.path.dirname(
@@ -148,16 +152,16 @@ class DataTransformation:
                 exist_ok=True
             )
 
-            import joblib
-            joblib.dump(
-                preprocessor,
-                self.data_transformation_config.preprocessor_obj_file_path
+            
+            
+            save_object(
+                file_path=self.data_transformation_config.preprocessor_obj_file_path,
+                obj=preprocessor
             )
+            train_arr = np.c_[X_train_transformed, y_train.values.reshape(-1, 1)]
+            test_arr = np.c_[X_test_transformed, y_test.values.reshape(-1, 1)]
 
             logging.info("Preprocessor saved successfully")
-
-            train_arr = np.c_[X_train_transformed, np.array(y_train)]
-            test_arr = np.c_[X_test_transformed, np.array(y_test)]
 
             logging.info("Data transformation completed")
 

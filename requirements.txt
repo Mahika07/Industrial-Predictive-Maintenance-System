@@ -6,4 +6,5 @@ seaborn
 xgboost
 imbalanced-learn
 joblib
+flask
 -e .

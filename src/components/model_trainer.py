@@ -75,10 +75,11 @@ class ModelTrainer:
             best_model.fit(X_train, y_train)
 
             save_object(
-                self.model_trainer_config.trained_model_file_path,
-                best_model
-            )
+                file_path=self.model_trainer_config.trained_model_file_path,
+                obj=best_model
 
+            )
+        
             logging.info(f"Best model selected: {best_model_name}")
             logging.info(f"Model performance: {model_report[best_model_name]}")
 

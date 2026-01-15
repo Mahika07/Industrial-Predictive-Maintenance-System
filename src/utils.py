@@ -3,7 +3,7 @@ import sys
 import pickle
 import numpy as np
 import pandas as pd
-
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from src.exception import CustomException
 from src.logger import logging
 
@@ -30,7 +30,6 @@ def load_object(file_path):
 
     except Exception as e:
         raise CustomException(e, sys)
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 def evaluate_model(y_true, y_pred):
     try:

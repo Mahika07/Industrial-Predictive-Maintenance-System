@@ -43,22 +43,27 @@ class PredictionPipeline:
 
         except Exception as e:
             raise CustomException(e, sys)
+        
     def predict(self, input_data: dict):
         try:
-            logging.info("Starting prediction pipeline")
-
+            # Convert dict to DataFrame
             df = pd.DataFrame([input_data])
 
+            logging.info("Input data converted to DataFrame")
             df = self._feature_engineering(df)
 
-            transformed_data = self.preprocessor.transform(df)
+          # Transform features
+            X_transformed = self.preprocessor.transform(df)
 
-            prediction = self.model.predict(transformed_data)[0]
-            probability = self.model.predict_proba(transformed_data)[0][1]
+            # Prediction
+            prediction = self.model.predict(X_transformed)[0]
+
+            # Probability (VERY IMPORTANT FIX)
+            probability = self.model.predict_proba(X_transformed)[0][1]
 
             return {
                 "prediction": int(prediction),
-                "failure_probability": round(probability, 4)
+                "failure_probability": round(float(probability), 2)
             }
 
         except Exception as e:
